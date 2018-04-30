@@ -3,7 +3,7 @@ import calc
 
 class TestCalc(unittest.TestCase):
     """
-    Test the add function from the calc library
+    Test the add function from the calc library no.2
     """
 
     def test_add_integers(self):
