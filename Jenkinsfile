@@ -14,7 +14,7 @@ pipeline {
         stage('Nexus') {
             steps {
                 echo 'Building..'
-                sh "nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application', iqStage: 'release', jobCredentialsId: '11'"
+                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application', iqStage: 'release', jobCredentialsId: '11'
             }
         }
         stage('Test') {
