@@ -11,6 +11,12 @@ pipeline {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
         }
+        stage('Nexus') {
+            steps {
+                echo 'Building..'
+                sh "nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application', iqStage: 'release', jobCredentialsId: '11'"
+            }
+        }
         stage('Test') {
             agent {
                 docker {
