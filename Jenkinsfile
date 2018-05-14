@@ -10,6 +10,7 @@ pipeline {
             steps {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
+        }
         stage('Test') {
             agent {
                 docker {
