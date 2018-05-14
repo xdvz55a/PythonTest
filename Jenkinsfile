@@ -12,7 +12,9 @@ pipeline {
             }
         }
         stage('NexusIQ') {
+            steps {
             nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application', iqStage: 'release', jobCredentialsId: '' 
+            }
         }
         stage('Test') {
             agent {
