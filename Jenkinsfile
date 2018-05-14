@@ -11,12 +11,18 @@ pipeline {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
         }
-        stage('Nexus') {
-            steps {
-                echo 'Building..'
-                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application', iqStage: 'release', jobCredentialsId: '11'
+        stage('Nexus Lifecycle Analysis') {
+              postGitHub commitId, 'pending', 'analysis', 'Nexus Lifecycle Analysis is running'
+
+              try {
+                def policyEvaluation = nexusPolicyEvaluation iqApplication: 'sandbox-application', iqStage: 'release'
+                postGitHub commitId, 'success', 'analysis', 'Nexus Lifecycle Analysis succeeded', "${policyEvaluation.applicationCompositionReportUrl}"
+              } catch (error) {
+                def policyEvaluation = error.policyEvaluation
+                postGitHub commitId, 'failure', 'analysis', 'Nexus Lifecycle Analysis failed', "${policyEvaluation.applicationCompositionReportUrl}"
+                throw error
+              }
             }
-        }
         stage('Test') {
             agent {
                 docker {
