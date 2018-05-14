@@ -12,16 +12,7 @@ pipeline {
             }
         }
         stage('Nexus Lifecycle Analysis') {
-              postGitHub commitId, 'pending', 'analysis', 'Nexus Lifecycle Analysis is running'
-
-              try {
-                def policyEvaluation = nexusPolicyEvaluation iqApplication: 'sandbox-application', iqStage: 'release'
-                postGitHub commitId, 'success', 'analysis', 'Nexus Lifecycle Analysis succeeded', "${policyEvaluation.applicationCompositionReportUrl}"
-              } catch (error) {
-                def policyEvaluation = error.policyEvaluation
-                postGitHub commitId, 'failure', 'analysis', 'Nexus Lifecycle Analysis failed', "${policyEvaluation.applicationCompositionReportUrl}"
-                throw error
-              }
+             nexusPolicyEvaluation iqApplication: 'sandbox-application', iqStage: 'release'
             }
         stage('Test') {
             agent {
