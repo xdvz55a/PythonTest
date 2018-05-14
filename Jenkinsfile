@@ -12,8 +12,10 @@ pipeline {
             }
         }
         stage('Nexus') { 
-            nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat',
+            steps {
+                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat',
   iqStage: 'build', jobCredentialsId: ''
+            }
         }
         stage('Test') {
             agent {
