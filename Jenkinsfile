@@ -14,7 +14,7 @@ pipeline {
         stage('Nexus') { 
             steps {
                 nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application',
-  iqStage: 'sandbox-application', jobCredentialsId: ''
+  iqStage: 'release', jobCredentialsId: ''
             }
         }
         stage('Test') {
