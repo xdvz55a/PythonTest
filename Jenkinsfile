@@ -11,7 +11,7 @@ pipeline {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
         }
-        stage('Nexus Lifecycle Analysis') {
+        stage('Nexus') { 
             nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat',
   iqStage: 'build', jobCredentialsId: ''
         }
