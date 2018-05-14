@@ -11,6 +11,17 @@ pipeline {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
         }
+        stage('Nexus Lifecycle Analysis') {
+
+          try {
+            def policyEvaluation = nexusPolicyEvaluation iqApplication: 'webgoat', iqStage: 'build'
+            postGitHub commitId, 'success', 'analysis', 'Nexus Lifecycle Analysis succeeded', "${policyEvaluation.applicationCompositionReportUrl}"
+          } catch (error) {
+            def policyEvaluation = error.policyEvaluation
+            postGitHub commitId, 'failure', 'analysis', 'Nexus Lifecycle Analysis failed', "${policyEvaluation.applicationCompositionReportUrl}"
+            throw error
+          }
+        }
         stage('Test') {
             agent {
                 docker {
