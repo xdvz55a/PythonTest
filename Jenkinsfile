@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Nexus Lifecycle Analysis') {
              nexusPolicyEvaluation iqApplication: 'sandbox-application', iqStage: 'release'
-            }
+        }
         stage('Test') {
             agent {
                 docker {
