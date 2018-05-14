@@ -11,9 +11,6 @@ pipeline {
                 sh 'python -m py_compile project/sources/add2vals.py project/sources/calc.py' 
             }
         }
-        stage('Nexus Lifecycle Analysis') {
-             nexusPolicyEvaluation iqApplication: 'sandbox-application', iqStage: 'release'
-        }
         stage('Test') {
             agent {
                 docker {
