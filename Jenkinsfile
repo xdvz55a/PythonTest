@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Nexus') { 
             steps {
-                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'sandbox-application',
+                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'one',
   iqStage: 'release'
             }
         }
